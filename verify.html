@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verificación con ZKPassport</title>
+  <script type="module">
+    import { ZKPassport } from 'https://cdn.jsdelivr.net/npm/@zkpassport/sdk/+esm';
+
+    const zkPassport = new ZKPassport("votum-backend.onrender.com");
+
+    zkPassport.request({
+      name: "Encuestas Privadas",
+      purpose: "Verificar que eres mayor de 18 y hondureño",
+      scope: "encuestas-hn-18",
+    })
+    .gte("age", 18)
+    .eq("nationality", "Honduras")
+    .done()
+    .then(({ url }) => {
+      window.location.href = url;
+    })
+    .catch((err) => {
+      console.error("Error al generar la URL de verificación:", err);
+    });
+  </script>
+</head>
+<body>
+  <p>Redirigiendo a ZKPassport…</p>
+</body>
+</html>
